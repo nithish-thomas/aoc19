@@ -1,4 +1,4 @@
-package fuel;
+package executionEngine;
 
 public class IntCode {
     private final int[] intCodes;

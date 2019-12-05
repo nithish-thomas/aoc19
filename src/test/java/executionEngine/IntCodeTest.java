@@ -1,10 +1,10 @@
-package fuel;
+package executionEngine;
 
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class IntCodeTest {
 

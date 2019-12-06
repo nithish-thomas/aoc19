@@ -11,20 +11,8 @@ public class OrbitalMap {
         planetCache.put(COM.getName(), COM);
     }
 
-    public Planet getCOM() {
-        return COM;
-    }
-
-    public void addPlanet(Planet home, Planet satellite){
-        home=planetCache.putIfAbsent(home.getName(), home);
-        satellite=planetCache.putIfAbsent(satellite.getName(), satellite);
-
-        home.addSatellite(satellite);
-        satellite.setParent(home);
-    }
-
-    public static Planet parse(String mapStr) {
-        OrbitalMap map = new OrbitalMap();
+    public static OrbitalMap parse(String mapStr) {
+        OrbitalMap orbitalMap = new OrbitalMap();
 
         final String[] entry = mapStr.split("\\\n");
         for (String anEntry : entry) {
@@ -33,8 +21,25 @@ public class OrbitalMap {
             final Planet planet0 = new Planet(planet[0].trim());
             final Planet planet1 = new Planet(planet[1].trim());
 
-            map.addPlanet(planet0, planet1);
+            orbitalMap.addPlanet(planet0, planet1);
         }
-        return map.COM;
+        return orbitalMap;
     }
+
+    public Planet getCOM() {
+        return COM;
+    }
+
+    public void addPlanet(Planet home, Planet satellite) {
+        planetCache.putIfAbsent(home.getName(), home);
+        planetCache.putIfAbsent(satellite.getName(), satellite);
+
+        home = planetCache.get(home.getName());
+        satellite = planetCache.get(satellite.getName());
+
+        home.addSatellite(satellite);
+        satellite.setParent(home);
+    }
+
+
 }

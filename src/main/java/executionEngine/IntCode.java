@@ -12,7 +12,7 @@ public class IntCode {
     private int opCodeExecutionLocation = 0;
 
     public IntCode(int... intCodes) {
-        this( new int[0], intCodes);
+        this(new int[0], intCodes);
     }
 
     public IntCode(int[] inputs, int... intCodes) {
@@ -32,20 +32,28 @@ public class IntCode {
                 case 99:
                     return;
                 case 1:
-                    add(opCodeExecutionLocation, instruction);
-                    opCodeExecutionLocation += 4;
+                    add();
                     break;
                 case 2:
-                    multiply(opCodeExecutionLocation, instruction);
-                    opCodeExecutionLocation += 4;
+                    multiply();
                     break;
                 case 3:
-                    input(opCodeExecutionLocation, instruction);
-                    opCodeExecutionLocation += 2;
+                    input();
                     break;
                 case 4:
-                    output(opCodeExecutionLocation, instruction);
-                    opCodeExecutionLocation += 2;
+                    output();
+                    break;
+                case 5:
+                    jumpIfTrue();
+                    break;
+                case 6:
+                    jumpIfFalse();
+                    break;
+                case 7:
+                    lessThan();
+                    break;
+                case 8:
+                    opEquals();
                     break;
 
                 default:
@@ -55,35 +63,75 @@ public class IntCode {
 
     }
 
-    private void output(int opCodeExecutionLocation, Instruction instruction) {
-        outputs.add(getParm(opCodeExecutionLocation + 1, instruction.getMode(1)));
+    private void opEquals() {
+
+        final int param1 = getParam(1);
+        final int param2 = getParam(2);
+        setParm(3, param1 == param2 ? 1 : 0);
+        opCodeExecutionLocation += 4;
     }
 
-    private void input(int opCodeExecutionLocation, Instruction instruction) {
-        setParm(opCodeExecutionLocation + 1, inputs[inputLoc++]);
+    private void lessThan() {
+        final int param1 = getParam(1);
+        final int param2 = getParam(2);
+        setParm(3, param1 < param2 ? 1 : 0);
+        opCodeExecutionLocation += 4;
     }
 
-    private void add(int opCodeExecutionLocation, Instruction instruction) {
-        final int parm1 = getParm(opCodeExecutionLocation + 1, instruction.getMode(1));
-        final int parm2 = getParm(opCodeExecutionLocation + 2, instruction.getMode(2));
+    private void jumpIfFalse() {
+        final int param1 = getParam(1);
+        if (param1 == 0) {
+            opCodeExecutionLocation = getParam(2);
+        } else {
+            opCodeExecutionLocation += 3;
+        }
+    }
+
+    private void jumpIfTrue() {
+        final int param1 = getParam(1);
+        if (param1 != 0) {
+            opCodeExecutionLocation = getParam(2);
+        } else {
+            opCodeExecutionLocation += 3;
+        }
+    }
+
+    private void output() {
+        outputs.add(getParam(1));
+        opCodeExecutionLocation += 2;
+    }
+
+    private void input() {
+        setParm(1, inputs[inputLoc++]);
+        opCodeExecutionLocation += 2;
+    }
+
+    private void add() {
+        final int parm1 = getParam(1);
+        final int parm2 = getParam(2);
         final int result = parm1 + parm2;
-        setParm(opCodeExecutionLocation + 3, result);
+        setParm(3, result);
+
+        opCodeExecutionLocation += 4;
     }
 
-    private void multiply(int opCodeExecutionLocation, Instruction instruction) {
-        final int parm1 = getParm(opCodeExecutionLocation + 1, instruction.getMode(1));
-        final int parm2 = getParm(opCodeExecutionLocation + 2, instruction.getMode(2));
+    private void multiply() {
+        final int parm1 = getParam(1);
+        final int parm2 = getParam(2);
         final int result = parm1 * parm2;
-        setParm(opCodeExecutionLocation + 3, result);
+        setParm(3, result);
+
+        opCodeExecutionLocation += 4;
     }
 
-    private int getParm(int location, int mode) {
-        final int valueAtLoc = intCodes[location];
+    private int getParam(int param) {
+        int mode = new Instruction(intCodes[opCodeExecutionLocation]).getMode(param);
+        final int valueAtLoc = intCodes[opCodeExecutionLocation + param];
         return mode == 0 ? intCodes[valueAtLoc] : valueAtLoc;
     }
 
-    private int setParm(int location, int value) {
-        final int valueAtLoc = intCodes[location];
+    private int setParm(int param, int value) {
+        final int valueAtLoc = intCodes[opCodeExecutionLocation + param];
         intCodes[valueAtLoc] = value;
         return value;
     }

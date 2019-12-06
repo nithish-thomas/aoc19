@@ -1834,7 +1834,6 @@ public class OrbitalMapTest {
           "RHJ)8MX");
 
         final long calculateCosts = new OrbitalMapScore().calculateCosts(orbitalMap.getCOM());
-        assertEquals(42, calculateCosts);
-
+        assertEquals(314702, calculateCosts);
     }
 }

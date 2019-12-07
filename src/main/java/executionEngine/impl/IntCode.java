@@ -8,24 +8,23 @@ public class IntCode {
     private final int[] program;
     private int[] workingMemory;
 
-    private final int inputs[];
+    private int inputs[];
     private List<Integer> outputs = new LinkedList<>();
     private int inputLoc = 0;
     private int opCodeExecutionLocation = 0;
 
-    public IntCode(int... program) {
-        this(new int[0], program);
-    }
 
-    public IntCode(int[] inputs, int... program) {
+    public IntCode( int... program) {
         this.program = program;
-        this.inputs = inputs;
     }
 
-    public int[] execute() {
+    public int[] execute(int... inputs) {
         workingMemory = Arrays.copyOf(program, program.length);
-        inputLoc = 0;
         opCodeExecutionLocation = 0;
+
+        this.inputs = inputs;
+        inputLoc = 0;
+
         outputs = new LinkedList<>();
 
         _execute();

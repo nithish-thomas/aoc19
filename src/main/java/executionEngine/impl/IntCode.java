@@ -32,9 +32,13 @@ public class IntCode {
         outputs = new LinkedList<>();
     }
 
+    public boolean hasHalted() {
+        return getCurrentInstruction().getOpCode()==99;
+    }
+
     private void _execute() {
         while (true) {
-            final Instruction instruction = new Instruction(workingMemory[opCodeExecutionLocation]);
+            final Instruction instruction = getCurrentInstruction();
             switch (instruction.getOpCode()) {
                 case 99:
                     return;
@@ -68,6 +72,10 @@ public class IntCode {
             }
         }
 
+    }
+
+    private Instruction getCurrentInstruction() {
+        return new Instruction(workingMemory[opCodeExecutionLocation]);
     }
 
     private void opEquals() {
@@ -132,7 +140,7 @@ public class IntCode {
     }
 
     private int getParam(int param) {
-        int mode = new Instruction(workingMemory[opCodeExecutionLocation]).getMode(param);
+        int mode = getCurrentInstruction().getMode(param);
         final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
         return mode == 0 ? workingMemory[valueAtLoc] : valueAtLoc;
     }

@@ -8,9 +8,8 @@ public class IntCode {
     private final int[] program;
 
     private int[] workingMemory;
-    private int inputs[];
+    private Input input;
     private List<Integer> outputs = new LinkedList<>();
-    private int inputLoc = 0;
     private int opCodeExecutionLocation = 0;
 
 
@@ -19,8 +18,8 @@ public class IntCode {
         workingMemory = Arrays.copyOf(program, program.length);
     }
 
-    public int[] execute(int... inputs) {
-        this.inputs = inputs;
+    public int[] execute(Input input) {
+        this.input = input;
         _execute();
         return workingMemory;
     }
@@ -28,7 +27,6 @@ public class IntCode {
     public void reset() {
         workingMemory = Arrays.copyOf(program, program.length);
         opCodeExecutionLocation = 0;
-        inputLoc = 0;
         outputs = new LinkedList<>();
     }
 
@@ -79,7 +77,6 @@ public class IntCode {
     }
 
     private void opEquals() {
-
         final int param1 = getParam(1);
         final int param2 = getParam(2);
         setParm(3, param1 == param2 ? 1 : 0);
@@ -117,7 +114,7 @@ public class IntCode {
     }
 
     private void input() {
-        setParm(1, inputs[inputLoc++]);
+        setParm(1, input.getInputs());
         opCodeExecutionLocation += 2;
     }
 

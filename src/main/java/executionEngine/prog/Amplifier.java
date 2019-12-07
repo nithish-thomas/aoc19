@@ -1,5 +1,6 @@
 package executionEngine.prog;
 
+import executionEngine.impl.Input;
 import executionEngine.impl.IntCode;
 
 public class Amplifier {
@@ -18,7 +19,7 @@ public class Amplifier {
         int outputSignalFromPrevAmplifier =0;
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
             amp[i].reset();
-            amp[i].execute(phaseSettingForEachAmplifier[i],outputSignalFromPrevAmplifier);
+            amp[i].execute(new Input(phaseSettingForEachAmplifier[i], outputSignalFromPrevAmplifier));
             outputSignalFromPrevAmplifier = amp[i].getOutputs().get(0);
         }
         return outputSignalFromPrevAmplifier;

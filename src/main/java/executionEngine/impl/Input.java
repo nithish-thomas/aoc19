@@ -3,6 +3,7 @@ package executionEngine.impl;
 import executionEngine.impl.error.WaitingForInputException;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -37,7 +38,7 @@ public class Input {
         }
         try {
             return inputQueue.remove();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | NoSuchElementException e) {
             throw new WaitingForInputException();
         }
     }

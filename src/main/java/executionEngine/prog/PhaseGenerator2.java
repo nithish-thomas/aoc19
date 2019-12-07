@@ -10,8 +10,6 @@ public class PhaseGenerator2 {
 
         permute(result, phase,0);
         return result.toArray(new int[0][]);
-
-
     }
 
     private static void permute(List<int[]> result, int[] phase, int currIndex) {

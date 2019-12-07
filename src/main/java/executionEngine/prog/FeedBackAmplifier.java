@@ -2,6 +2,8 @@ package executionEngine.prog;
 
 import executionEngine.impl.IntCode;
 
+import static executionEngine.IntCodeUtils.getLast;
+
 public class FeedBackAmplifier {
     private static int NUM_OF_AMPLIFIERS = 5;
 
@@ -14,13 +16,19 @@ public class FeedBackAmplifier {
         }
     }
 
+
+
     public long execute(int... phaseSettingForEachAmplifier){
         int outputSignalFromPrevAmplifier =0;
-        for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
-            amp[i].execute(phaseSettingForEachAmplifier[i],outputSignalFromPrevAmplifier);
-            outputSignalFromPrevAmplifier = amp[i].getOutputs().get(0);
+        while (true) {
+            for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
+                amp[i].execute(phaseSettingForEachAmplifier[i], outputSignalFromPrevAmplifier);
+                outputSignalFromPrevAmplifier = getLast(amp[i].getOutputs());
+            }
+            if(amp[NUM_OF_AMPLIFIERS-1].hasHalted()){
+                return getLast(amp[NUM_OF_AMPLIFIERS - 1].getOutputs());
+            }
         }
-        return outputSignalFromPrevAmplifier;
     }
 
 

@@ -50,7 +50,7 @@ public class FeedBackAmplifier {
                 try {
                     amp[i].execute(inputs[i],outputs[i]);
                 }catch (WaitingForInputException e){
-                    e.printStackTrace(System.err);
+                    System.err.println("waiting for input");
                 }
             }
             if(amp[NUM_OF_AMPLIFIERS-1].hasHalted()){

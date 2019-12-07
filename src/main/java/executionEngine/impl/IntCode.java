@@ -121,7 +121,7 @@ public class IntCode {
     }
 
     private void input() {
-        setParm(1, input.getInputs());
+        setParm(1, input.getInputsWithException());
         opCodeExecutionLocation += 2;
     }
 

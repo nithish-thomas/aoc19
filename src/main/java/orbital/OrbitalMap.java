@@ -11,6 +11,10 @@ public class OrbitalMap {
         planetCache.put(COM.getName(), COM);
     }
 
+    public Planet getPlanetByName(String planetName){
+        return planetCache.get(planetName.trim());
+    }
+
     public static OrbitalMap parse(String mapStr) {
         OrbitalMap orbitalMap = new OrbitalMap();
 

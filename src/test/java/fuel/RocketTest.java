@@ -13,7 +13,7 @@ public class RocketTest {
 
 
     @Test
-    public void expectFuelRequirementOfRocketToBe3231195ForGivenModules() {
+    public void expectFuelRequirementOfRocketToBe4843929ForGivenModules() {
         final List<Module> modules = asList(93129, 111125, 77024, 65507, 61045,
           131569, 139270, 124313, 53144, 144718, 58125
           , 66535, 62637, 87439, 87522, 96145, 96336
@@ -29,6 +29,6 @@ public class RocketTest {
           71793, 116187, 127101, 75980, 89708, 99640, 60915, 57840, 144763).stream()
           .map(Module::new).collect(Collectors.toList());
 
-        assertEquals(3231195, new Rocket(modules).fuelRequired());
+        assertEquals(4843929, new Rocket(modules).fuelRequired());
     }
 }

@@ -42,6 +42,7 @@ public class AmplifierTest {
           .max();
 
         System.out.println(max.getAsLong());
+        assertEquals(272368, max.getAsLong());
 
 
     }

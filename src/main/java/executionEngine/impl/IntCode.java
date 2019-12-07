@@ -6,8 +6,8 @@ import java.util.List;
 
 public class IntCode {
     private final int[] program;
-    private int[] workingMemory;
 
+    private int[] workingMemory;
     private int inputs[];
     private List<Integer> outputs = new LinkedList<>();
     private int inputLoc = 0;
@@ -16,20 +16,20 @@ public class IntCode {
 
     public IntCode( int... program) {
         this.program = program;
+        workingMemory = Arrays.copyOf(program, program.length);
     }
 
     public int[] execute(int... inputs) {
+        this.inputs = inputs;
+        _execute();
+        return workingMemory;
+    }
+
+    public void reset() {
         workingMemory = Arrays.copyOf(program, program.length);
         opCodeExecutionLocation = 0;
-
-        this.inputs = inputs;
         inputLoc = 0;
-
         outputs = new LinkedList<>();
-
-        _execute();
-
-        return workingMemory;
     }
 
     private void _execute() {

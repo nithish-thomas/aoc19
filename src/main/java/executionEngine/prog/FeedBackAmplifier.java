@@ -2,12 +2,12 @@ package executionEngine.prog;
 
 import executionEngine.impl.IntCode;
 
-public class Amplifier {
+public class FeedBackAmplifier {
     private static int NUM_OF_AMPLIFIERS = 5;
 
     private final IntCode amp[];
 
-    public Amplifier(int... program) {
+    public FeedBackAmplifier(int... program) {
         amp= new IntCode[NUM_OF_AMPLIFIERS];
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
             amp[i]= new IntCode(program);
@@ -17,7 +17,6 @@ public class Amplifier {
     public long execute(int... phaseSettingForEachAmplifier){
         int outputSignalFromPrevAmplifier =0;
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
-            amp[i].reset();
             amp[i].execute(phaseSettingForEachAmplifier[i],outputSignalFromPrevAmplifier);
             outputSignalFromPrevAmplifier = amp[i].getOutputs().get(0);
         }

@@ -2,6 +2,9 @@ package executionEngine.prog;
 
 import executionEngine.impl.Input;
 import executionEngine.impl.IntCode;
+import executionEngine.impl.Output;
+
+import static executionEngine.IntCodeUtils.getLast;
 
 public class Amplifier {
     private static int NUM_OF_AMPLIFIERS = 5;
@@ -18,9 +21,11 @@ public class Amplifier {
     public long execute(int... phaseSettingForEachAmplifier){
         int outputSignalFromPrevAmplifier =0;
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
+            final Input input = new Input(phaseSettingForEachAmplifier[i], outputSignalFromPrevAmplifier);
             amp[i].reset();
-            amp[i].execute(new Input(phaseSettingForEachAmplifier[i], outputSignalFromPrevAmplifier));
-            outputSignalFromPrevAmplifier = amp[i].getOutputs().get(0);
+            amp[i].execute(input);
+            final Output output = amp[i].getOutput();
+            outputSignalFromPrevAmplifier = getLast(output.getOutputs());
         }
         return outputSignalFromPrevAmplifier;
     }

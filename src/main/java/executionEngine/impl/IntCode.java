@@ -1,15 +1,15 @@
 package executionEngine.impl;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IntCode {
     private final int[] program;
+    private Output output = new Output();
 
     private int[] workingMemory;
     private Input input;
-    private List<Integer> outputs = new LinkedList<>();
     private int opCodeExecutionLocation = 0;
 
 
@@ -34,7 +34,7 @@ public class IntCode {
     public void reset() {
         workingMemory = Arrays.copyOf(program, program.length);
         opCodeExecutionLocation = 0;
-        outputs = new LinkedList<>();
+        output = new Output();
     }
 
     public boolean hasHalted() {
@@ -116,7 +116,7 @@ public class IntCode {
     }
 
     private void output() {
-        outputs.add(getParam(1));
+        output.add(getParam(1));
         opCodeExecutionLocation += 2;
     }
 
@@ -155,8 +155,11 @@ public class IntCode {
         return value;
     }
 
-    public List<Integer> getOutputs() {
-        return outputs;
+    public List<Integer> getOutputsAsList() {
+        return output.getOutputs().stream().collect(Collectors.toList());
     }
 
+    public Output getOutput() {
+        return output;
+    }
 }

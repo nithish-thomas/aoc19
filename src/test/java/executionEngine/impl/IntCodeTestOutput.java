@@ -29,7 +29,7 @@ public class IntCodeTestOutput {
 
     private void expectProgramOutputToBe(int expected, IntCode intCode, int... input) {
         intCode.execute(new Input(input));
-        final List<Integer> outputs = intCode.getOutputs();
+        final List<Integer> outputs = intCode.getOutputsAsList();
         final Integer outputsOfProgram = outputs.get(outputs.size() - 1);
         assertEquals(new Integer(expected), outputsOfProgram);
     }

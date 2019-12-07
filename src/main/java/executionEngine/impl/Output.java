@@ -9,7 +9,11 @@ public class Output {
     public Output() {
     }
 
-    public BlockingQueue<Integer> getOutputs() {
+    public Output(BlockingQueue<Integer> outputs) {
+        this.outputs = outputs;
+    }
+
+    public BlockingQueue<Integer> getOutputQueue() {
         return outputs;
     }
 

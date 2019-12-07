@@ -1,8 +1,8 @@
 package executionEngine.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class IntCode {
     private final int[] program;
@@ -18,13 +18,19 @@ public class IntCode {
         workingMemory = Arrays.copyOf(program, program.length);
     }
 
-    public void execute() {
-        execute(new Input());
+    public Output execute() {
+       return execute(new Input());
     }
 
-    public void execute(Input input) {
+    public Output execute(Input input) {
+        return execute(input, new Output());
+    }
+
+    public Output execute(Input input, Output output) {
         this.input = input;
+        this.output = output;
         _execute();
+        return this.output;
     }
 
     public int[] getWorkingMemory() {
@@ -156,7 +162,7 @@ public class IntCode {
     }
 
     public List<Integer> getOutputsAsList() {
-        return output.getOutputs().stream().collect(Collectors.toList());
+        return new ArrayList<>(output.getOutputQueue());
     }
 
     public Output getOutput() {

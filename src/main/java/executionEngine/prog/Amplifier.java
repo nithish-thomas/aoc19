@@ -25,7 +25,7 @@ public class Amplifier {
             amp[i].reset();
             amp[i].execute(input);
             final Output output = amp[i].getOutput();
-            outputSignalFromPrevAmplifier = getLast(output.getOutputs());
+            outputSignalFromPrevAmplifier = getLast(output.getOutputQueue());
         }
         return outputSignalFromPrevAmplifier;
     }

@@ -1,33 +1,41 @@
-package executionEngine;
+package executionEngine.impl;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class IntCode {
-    private final int[] intCodes;
+    private final int[] program;
+    private int[] workingMemory;
 
     private final int inputs[];
-    private final List<Integer> outputs = new LinkedList<>();
+    private List<Integer> outputs = new LinkedList<>();
     private int inputLoc = 0;
     private int opCodeExecutionLocation = 0;
 
-    public IntCode(int... intCodes) {
-        this(new int[0], intCodes);
+    public IntCode(int... program) {
+        this(new int[0], program);
     }
 
-    public IntCode(int[] inputs, int... intCodes) {
-        this.intCodes = intCodes;
+    public IntCode(int[] inputs, int... program) {
+        this.program = program;
         this.inputs = inputs;
     }
 
     public int[] execute() {
-        executeFrom();
-        return intCodes;
+        workingMemory = Arrays.copyOf(program, program.length);
+        inputLoc = 0;
+        opCodeExecutionLocation = 0;
+        outputs = new LinkedList<>();
+
+        _execute();
+
+        return workingMemory;
     }
 
-    private void executeFrom() {
+    private void _execute() {
         while (true) {
-            final Instruction instruction = new Instruction(intCodes[opCodeExecutionLocation]);
+            final Instruction instruction = new Instruction(workingMemory[opCodeExecutionLocation]);
             switch (instruction.getOpCode()) {
                 case 99:
                     return;
@@ -125,14 +133,14 @@ public class IntCode {
     }
 
     private int getParam(int param) {
-        int mode = new Instruction(intCodes[opCodeExecutionLocation]).getMode(param);
-        final int valueAtLoc = intCodes[opCodeExecutionLocation + param];
-        return mode == 0 ? intCodes[valueAtLoc] : valueAtLoc;
+        int mode = new Instruction(workingMemory[opCodeExecutionLocation]).getMode(param);
+        final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
+        return mode == 0 ? workingMemory[valueAtLoc] : valueAtLoc;
     }
 
     private int setParm(int param, int value) {
-        final int valueAtLoc = intCodes[opCodeExecutionLocation + param];
-        intCodes[valueAtLoc] = value;
+        final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
+        workingMemory[valueAtLoc] = value;
         return value;
     }
 

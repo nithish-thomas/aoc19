@@ -1,11 +1,10 @@
-package executionEngine;
+package executionEngine.impl;
 
 import org.junit.Test;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class IntCodeTestOutput {
     @Test

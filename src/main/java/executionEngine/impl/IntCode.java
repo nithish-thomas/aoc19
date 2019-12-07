@@ -13,14 +13,21 @@ public class IntCode {
     private int opCodeExecutionLocation = 0;
 
 
-    public IntCode( int... program) {
+    public IntCode(int... program) {
         this.program = program;
         workingMemory = Arrays.copyOf(program, program.length);
     }
 
-    public int[] execute(Input input) {
+    public void execute() {
+        execute(new Input());
+    }
+
+    public void execute(Input input) {
         this.input = input;
         _execute();
+    }
+
+    public int[] getWorkingMemory() {
         return workingMemory;
     }
 
@@ -151,4 +158,5 @@ public class IntCode {
     public List<Integer> getOutputs() {
         return outputs;
     }
+
 }

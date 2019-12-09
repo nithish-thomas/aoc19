@@ -11,6 +11,7 @@ public class IntCode {
     private int[] workingMemory;
     private Input input;
     private int opCodeExecutionLocation = 0;
+    private int relativeBase = 0;
 
 
     public IntCode(int... program) {
@@ -19,7 +20,7 @@ public class IntCode {
     }
 
     public Output execute() {
-       return execute(new Input());
+        return execute(new Input());
     }
 
     public Output execute(Input input) {
@@ -40,11 +41,12 @@ public class IntCode {
     public void reset() {
         workingMemory = Arrays.copyOf(program, program.length);
         opCodeExecutionLocation = 0;
+        relativeBase = 0;
         output = new Output();
     }
 
     public boolean hasHalted() {
-        return getCurrentInstruction().getOpCode()==99;
+        return getCurrentInstruction().getOpCode() == 99;
     }
 
     private void _execute() {
@@ -152,7 +154,12 @@ public class IntCode {
     private int getParam(int param) {
         int mode = getCurrentInstruction().getMode(param);
         final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
-        return mode == 0 ? workingMemory[valueAtLoc] : valueAtLoc;
+        switch (mode) {
+            case 0:
+                return workingMemory[valueAtLoc];
+            default:
+                return valueAtLoc;
+        }
     }
 
     private int setParm(int param, int value) {

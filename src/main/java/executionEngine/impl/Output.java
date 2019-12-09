@@ -4,20 +4,20 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Output {
-    private BlockingQueue<Integer> outputs = new ArrayBlockingQueue<>(10);
+    private BlockingQueue<Long> outputs = new ArrayBlockingQueue<>(10);
 
     public Output() {
     }
 
-    public Output(BlockingQueue<Integer> outputs) {
+    public Output(BlockingQueue<Long> outputs) {
         this.outputs = outputs;
     }
 
-    public BlockingQueue<Integer> getOutputQueue() {
+    public BlockingQueue<Long> getOutputQueue() {
         return outputs;
     }
 
-    public void add(Integer output) {
+    public void add(Long output) {
         outputs.add(output);
     }
 }

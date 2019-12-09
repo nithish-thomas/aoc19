@@ -9,10 +9,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Input {
-    private Queue<Integer> startInputs = new LinkedList<>();
-    private final BlockingQueue<Integer> inputQueue;
+    private Queue<Long> startInputs = new LinkedList<>();
+    private final BlockingQueue<Long> inputQueue;
 
-    public Input(int... inputs) {
+    public Input(long... inputs) {
         inputQueue = new ArrayBlockingQueue<>(inputs.length > 4 ? inputs.length : 4);
 
         for (int i = 0; i < inputs.length; i++) {
@@ -21,18 +21,18 @@ public class Input {
 
     }
 
-    public Input(BlockingQueue<Integer> inputQueue) {
+    public Input(BlockingQueue<Long> inputQueue) {
         this.inputQueue = inputQueue;
     }
 
-    public Input(int[] startInputs, BlockingQueue<Integer> inputQueue) {
-        for (int startInput: startInputs) {
+    public Input(long[] startInputs, BlockingQueue<Long> inputQueue) {
+        for (long startInput: startInputs) {
             this.startInputs.add(startInput);
         }
         this.inputQueue = inputQueue;
     }
 
-    public int getInputsWithException() {
+    public long getInputsWithException() {
         if(!startInputs.isEmpty()){
             return startInputs.remove();
         }

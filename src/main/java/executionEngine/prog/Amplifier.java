@@ -11,7 +11,7 @@ public class Amplifier {
 
     private final IntCode amp[];
 
-    public Amplifier(int... program) {
+    public Amplifier(long... program) {
         amp= new IntCode[NUM_OF_AMPLIFIERS];
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
             amp[i]= new IntCode(program);
@@ -19,7 +19,7 @@ public class Amplifier {
     }
 
     public long execute(int... phaseSettingForEachAmplifier){
-        int outputSignalFromPrevAmplifier =0;
+        long outputSignalFromPrevAmplifier =0;
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
             final Input input = new Input(phaseSettingForEachAmplifier[i], outputSignalFromPrevAmplifier);
             amp[i].reset();

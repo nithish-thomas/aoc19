@@ -15,7 +15,7 @@ public class FeedBackAmplifier {
 
     private final IntCode amp[];
 
-    public FeedBackAmplifier(int... program) {
+    public FeedBackAmplifier(long... program) {
         amp= new IntCode[NUM_OF_AMPLIFIERS];
         for (int i = 0; i < NUM_OF_AMPLIFIERS; i++) {
             amp[i]= new IntCode(program);
@@ -23,17 +23,17 @@ public class FeedBackAmplifier {
     }
 
     public long execute(int... phaseSettingForEachAmplifier){
-        final BlockingQueue<Integer> amp_A_B_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Integer> amp_B_C_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Integer> amp_C_D_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Integer> amp_D_E_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Integer> amp_E_A_Stream = new ArrayBlockingQueue<>(5);
+        final BlockingQueue<Long> amp_A_B_Stream = new ArrayBlockingQueue<>(5);
+        final BlockingQueue<Long> amp_B_C_Stream = new ArrayBlockingQueue<>(5);
+        final BlockingQueue<Long> amp_C_D_Stream = new ArrayBlockingQueue<>(5);
+        final BlockingQueue<Long> amp_D_E_Stream = new ArrayBlockingQueue<>(5);
+        final BlockingQueue<Long> amp_E_A_Stream = new ArrayBlockingQueue<>(5);
 
-        final Input inA = new Input(new int[]{phaseSettingForEachAmplifier[0],0}, amp_E_A_Stream);
-        final Input inB = new Input(new int[]{phaseSettingForEachAmplifier[1]}, amp_A_B_Stream);
-        final Input inC = new Input(new int[]{phaseSettingForEachAmplifier[2]}, amp_B_C_Stream);
-        final Input inD = new Input(new int[]{phaseSettingForEachAmplifier[3]}, amp_C_D_Stream);
-        final Input inE = new Input(new int[]{phaseSettingForEachAmplifier[4]}, amp_D_E_Stream);
+        final Input inA = new Input(new long[]{phaseSettingForEachAmplifier[0],0}, amp_E_A_Stream);
+        final Input inB = new Input(new long[]{phaseSettingForEachAmplifier[1]}, amp_A_B_Stream);
+        final Input inC = new Input(new long[]{phaseSettingForEachAmplifier[2]}, amp_B_C_Stream);
+        final Input inD = new Input(new long[]{phaseSettingForEachAmplifier[3]}, amp_C_D_Stream);
+        final Input inE = new Input(new long[]{phaseSettingForEachAmplifier[4]}, amp_D_E_Stream);
 
         final Input[] inputs = {inA, inB, inC, inD, inE};
 

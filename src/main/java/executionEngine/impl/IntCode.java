@@ -5,16 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IntCode {
-    private final int[] program;
+    private final long[] program;
     private Output output = new Output();
 
-    private int[] workingMemory;
+    private long[] workingMemory;
     private Input input;
     private int opCodeExecutionLocation = 0;
     private int relativeBase = 0;
 
 
-    public IntCode(int... program) {
+    public IntCode(long... program) {
         this.program = program;
         workingMemory = Arrays.copyOf(program, program.length);
     }
@@ -34,7 +34,7 @@ public class IntCode {
         return this.output;
     }
 
-    public int[] getWorkingMemory() {
+    public long[] getWorkingMemory() {
         return workingMemory;
     }
 
@@ -91,7 +91,7 @@ public class IntCode {
     }
 
     private void relativeBaseAdjust() {
-        final int param1 = getParam(1);
+        final long param1 = getParam(1);
         relativeBase+=param1;
         opCodeExecutionLocation+=2;
     }
@@ -101,32 +101,32 @@ public class IntCode {
     }
 
     private void opEquals() {
-        final int param1 = getParam(1);
-        final int param2 = getParam(2);
+        final long param1 = getParam(1);
+        final long param2 = getParam(2);
         setParm(3, param1 == param2 ? 1 : 0);
         opCodeExecutionLocation += 4;
     }
 
     private void lessThan() {
-        final int param1 = getParam(1);
-        final int param2 = getParam(2);
+        final long param1 = getParam(1);
+        final long param2 = getParam(2);
         setParm(3, param1 < param2 ? 1 : 0);
         opCodeExecutionLocation += 4;
     }
 
     private void jumpIfFalse() {
-        final int param1 = getParam(1);
+        final long param1 = getParam(1);
         if (param1 == 0) {
-            opCodeExecutionLocation = getParam(2);
+            opCodeExecutionLocation = (int)getParam(2);
         } else {
             opCodeExecutionLocation += 3;
         }
     }
 
     private void jumpIfTrue() {
-        final int param1 = getParam(1);
+        final long param1 = getParam(1);
         if (param1 != 0) {
-            opCodeExecutionLocation = getParam(2);
+            opCodeExecutionLocation = (int)getParam(2);
         } else {
             opCodeExecutionLocation += 3;
         }
@@ -143,44 +143,44 @@ public class IntCode {
     }
 
     private void add() {
-        final int parm1 = getParam(1);
-        final int parm2 = getParam(2);
-        final int result = parm1 + parm2;
+        final long parm1 = getParam(1);
+        final long parm2 = getParam(2);
+        final long result = parm1 + parm2;
         setParm(3, result);
 
         opCodeExecutionLocation += 4;
     }
 
     private void multiply() {
-        final int parm1 = getParam(1);
-        final int parm2 = getParam(2);
-        final int result = parm1 * parm2;
+        final long parm1 = getParam(1);
+        final long parm2 = getParam(2);
+        final long result = parm1 * parm2;
         setParm(3, result);
 
         opCodeExecutionLocation += 4;
     }
 
-    private int getParam(int param) {
+    private long getParam(int param) {
         int mode = getCurrentInstruction().getMode(param);
-        final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
+        final long valueAtLoc = workingMemory[opCodeExecutionLocation + param];
         switch (mode) {
             case 0:
-                return workingMemory[valueAtLoc];
+                return workingMemory[(int) valueAtLoc];
             case 1:
                 return valueAtLoc;
             case 2:
-                return workingMemory[relativeBase+valueAtLoc];
+                return workingMemory[(int) (relativeBase+valueAtLoc)];
             default: throw new RuntimeException("Mode not known");
         }
     }
 
-    private int setParm(int param, int value) {
-        final int valueAtLoc = workingMemory[opCodeExecutionLocation + param];
-        workingMemory[valueAtLoc] = value;
+    private long setParm(int param, long value) {
+        final long valueAtLoc = workingMemory[opCodeExecutionLocation + param];
+        workingMemory[(int) valueAtLoc] = value;
         return value;
     }
 
-    public List<Integer> getOutputsAsList() {
+    public List<Long> getOutputsAsList() {
         return new ArrayList<>(output.getOutputQueue());
     }
 

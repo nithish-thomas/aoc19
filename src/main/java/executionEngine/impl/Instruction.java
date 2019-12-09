@@ -11,14 +11,14 @@ package executionEngine.impl;
  *                                   omitted due to being a leading zero
  */
 public class Instruction {
-    private final int code;
+    private final long code;
 
-    public Instruction(int code) {
+    public Instruction(long code) {
         this.code = code;
     }
 
     public int getOpCode() {
-        return code % 100;
+        return (int) (code % 100);
     }
 
     public int getMode(int position) {

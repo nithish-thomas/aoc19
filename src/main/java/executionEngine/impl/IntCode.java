@@ -79,12 +79,21 @@ public class IntCode {
                 case 8:
                     opEquals();
                     break;
+                case 9:
+                    relativeBaseAdjust();
+                    break;
 
                 default:
                     throw new RuntimeException("Int code exception");
             }
         }
 
+    }
+
+    private void relativeBaseAdjust() {
+        final int param1 = getParam(1);
+        relativeBase+=param1;
+        opCodeExecutionLocation+=2;
     }
 
     private Instruction getCurrentInstruction() {
@@ -157,8 +166,11 @@ public class IntCode {
         switch (mode) {
             case 0:
                 return workingMemory[valueAtLoc];
-            default:
+            case 1:
                 return valueAtLoc;
+            case 2:
+                return workingMemory[relativeBase+valueAtLoc];
+            default: throw new RuntimeException("Mode not known");
         }
     }
 

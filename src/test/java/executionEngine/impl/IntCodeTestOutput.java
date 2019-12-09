@@ -27,11 +27,24 @@ public class IntCodeTestOutput {
        expectProgramOutputToBe(15163975, intCodeExecutor,5);
     }
 
+//    @Test
+//    public void shouldPrintDay9Test1(){
+//        final int[] opCodes = {109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99};
+//        final IntCode intCodeExecutor = new IntCode(opCodes);
+//       expectProgramOutputToBe(Arrays.asList(109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99), intCodeExecutor,5);
+//    }
+
     private void expectProgramOutputToBe(int expected, IntCode intCode, int... input) {
         intCode.execute(new Input(input));
         final List<Integer> outputs = intCode.getOutputsAsList();
         final Integer outputsOfProgram = outputs.get(outputs.size() - 1);
         assertEquals(new Integer(expected), outputsOfProgram);
+    }
+
+    private void expectProgramOutputToBe(List<Integer> expected, IntCode intCode, int... input) {
+        intCode.execute(new Input(input));
+        final List<Integer> outputs = intCode.getOutputsAsList();
+        assertEquals(expected, outputs);
     }
 
 }

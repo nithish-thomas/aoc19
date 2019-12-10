@@ -4,7 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Output {
-    private BlockingQueue<Long> outputs = new ArrayBlockingQueue<>(10);
+    private BlockingQueue<Long> outputs = new ArrayBlockingQueue<>(200);
 
     public Output() {
     }

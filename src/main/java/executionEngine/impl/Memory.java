@@ -15,11 +15,13 @@ public class Memory {
     }
 
     public long getValueAt(long i) {
+        if(i<0) throw new RuntimeException("Error while accessing memory at "+i);
         return memory.getOrDefault(i,0L);
     }
 
-    public void setValueAt(long i, long value) {
+    public long setValueAt(long i, long value) {
         memory.put(i, value);
+        return value;
     }
 
     public long[] getAsArray(){

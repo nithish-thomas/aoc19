@@ -2,13 +2,7 @@ package executionEngine.impl;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
-
-public class IntCodeTestOutput {
+public class IntCodeTestOutput extends IntCodeTestOutputUtil {
     @Test
     public void shouldReturnOneWhenInputIs8() {
         final IntCode intCode = new IntCode( 3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8);
@@ -29,36 +23,5 @@ public class IntCodeTestOutput {
        expectProgramOutputToBe(15163975, intCodeExecutor,5);
     }
 
-    @Test
-    public void shouldPrintDay9Test1(){
-        final long[] opCodes = {109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99};
-        final IntCode intCodeExecutor = new IntCode(opCodes);
-        final List<Long> expectedLong = Arrays.asList(109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99)
-          .stream()
-          .mapToLong(Long::valueOf)
-          .boxed()
-          .collect(Collectors.toList());
-        expectProgramOutputToBe(expectedLong, intCodeExecutor,5);
-    }
-
-    @Test
-    public void shouldPrintDay9Test3(){
-        final long[] opCodes = {104,1125899906842624L,99};
-        final IntCode intCodeExecutor = new IntCode(opCodes);
-       expectProgramOutputToBe(1125899906842624L, intCodeExecutor,5);
-    }
-
-    private void expectProgramOutputToBe(long expected, IntCode intCode, long... input) {
-        intCode.execute(new Input(input));
-        final List<Long> outputs = intCode.getOutputsAsList();
-        final Long outputsOfProgram = outputs.get(outputs.size() - 1);
-        assertEquals(Long.valueOf(expected), outputsOfProgram);
-    }
-
-    private void expectProgramOutputToBe(List<Long> expected, IntCode intCode, long... input) {
-        intCode.execute(new Input(input));
-        final List<Long> outputs = intCode.getOutputsAsList();
-        assertEquals(expected, outputs);
-    }
 
 }

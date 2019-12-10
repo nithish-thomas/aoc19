@@ -175,9 +175,16 @@ public class IntCode {
     }
 
     private long setParm(int param, long value) {
+        int mode = getCurrentInstruction().getMode(param);
         final long valueAtLoc = workingMemory.getValueAt(opCodeExecutionLocation + param);
-        workingMemory.setValueAt(valueAtLoc, value);
-        return value;
+        switch (mode) {
+            case 0:
+                return workingMemory.setValueAt(valueAtLoc, value);
+            case 2:
+                return workingMemory.setValueAt(relativeBase + valueAtLoc, value);
+            default:
+                throw new RuntimeException("Mode not known");
+        }
     }
 
     public List<Long> getOutputsAsList() {

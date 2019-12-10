@@ -1,14 +1,13 @@
 package executionEngine.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class IntCode {
     private final long[] program;
     private Output output = new Output();
 
-    private long[] workingMemory;
+    private Memory workingMemory;
     private Input input;
     private int opCodeExecutionLocation = 0;
     private int relativeBase = 0;
@@ -16,7 +15,7 @@ public class IntCode {
 
     public IntCode(long... program) {
         this.program = program;
-        workingMemory = Arrays.copyOf(program, program.length);
+        workingMemory = Memory.create(program);
     }
 
     public Output execute() {
@@ -35,11 +34,11 @@ public class IntCode {
     }
 
     public long[] getWorkingMemory() {
-        return workingMemory;
+        return workingMemory.getAsArray();
     }
 
     public void reset() {
-        workingMemory = Arrays.copyOf(program, program.length);
+        workingMemory = Memory.create(program);
         opCodeExecutionLocation = 0;
         relativeBase = 0;
         output = new Output();
@@ -92,12 +91,12 @@ public class IntCode {
 
     private void relativeBaseAdjust() {
         final long param1 = getParam(1);
-        relativeBase+=param1;
-        opCodeExecutionLocation+=2;
+        relativeBase += param1;
+        opCodeExecutionLocation += 2;
     }
 
     private Instruction getCurrentInstruction() {
-        return new Instruction(workingMemory[opCodeExecutionLocation]);
+        return new Instruction(workingMemory.getValueAt(opCodeExecutionLocation));
     }
 
     private void opEquals() {
@@ -117,7 +116,7 @@ public class IntCode {
     private void jumpIfFalse() {
         final long param1 = getParam(1);
         if (param1 == 0) {
-            opCodeExecutionLocation = (int)getParam(2);
+            opCodeExecutionLocation = (int) getParam(2);
         } else {
             opCodeExecutionLocation += 3;
         }
@@ -126,7 +125,7 @@ public class IntCode {
     private void jumpIfTrue() {
         final long param1 = getParam(1);
         if (param1 != 0) {
-            opCodeExecutionLocation = (int)getParam(2);
+            opCodeExecutionLocation = (int) getParam(2);
         } else {
             opCodeExecutionLocation += 3;
         }
@@ -162,21 +161,22 @@ public class IntCode {
 
     private long getParam(int param) {
         int mode = getCurrentInstruction().getMode(param);
-        final long valueAtLoc = workingMemory[opCodeExecutionLocation + param];
+        final long valueAtLoc = workingMemory.getValueAt(opCodeExecutionLocation + param);
         switch (mode) {
             case 0:
-                return workingMemory[(int) valueAtLoc];
+                return workingMemory.getValueAt(valueAtLoc);
             case 1:
                 return valueAtLoc;
             case 2:
-                return workingMemory[(int) (relativeBase+valueAtLoc)];
-            default: throw new RuntimeException("Mode not known");
+                return workingMemory.getValueAt(relativeBase + valueAtLoc);
+            default:
+                throw new RuntimeException("Mode not known");
         }
     }
 
     private long setParm(int param, long value) {
-        final long valueAtLoc = workingMemory[opCodeExecutionLocation + param];
-        workingMemory[(int) valueAtLoc] = value;
+        final long valueAtLoc = workingMemory.getValueAt(opCodeExecutionLocation + param);
+        workingMemory.setValueAt(valueAtLoc, value);
         return value;
     }
 

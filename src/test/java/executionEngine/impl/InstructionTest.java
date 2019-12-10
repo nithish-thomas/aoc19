@@ -14,6 +14,15 @@ public class InstructionTest {
     }
 
     @Test
+    public void expectOpCodeFor21102() {
+        final Instruction instruction = new Instruction(21102);
+        assertEquals(2, instruction.getOpCode());
+        assertEquals(1, instruction.getMode(1));
+        assertEquals(1, instruction.getMode(2));
+        assertEquals(2, instruction.getMode(3));
+    }
+
+    @Test
     public void expectPositionModeToBeCalculated() {
         assertEquals(0, new Instruction(1002).getMode(1));
         assertEquals(1, new Instruction(1002).getMode(2));

@@ -22,8 +22,9 @@ public class Instruction {
     }
 
     public int getMode(int position) {
-        final int multiplication = (int) (Math.pow(10,position) * 10);
-        return (code / multiplication) % (multiplication / 10)==1?1:0;
+        final int multiplication = (int) (Math.pow(10,position) * 100);
+        final long mode = (code % multiplication )/(multiplication/10) ;
+        return (int) mode;
     }
 
 }

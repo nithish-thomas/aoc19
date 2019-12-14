@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 public class Input {
     private Queue<Long> startInputs = new LinkedList<>();
@@ -21,7 +20,7 @@ public class Input {
 
     }
 
-    public Input(BlockingQueue<Long> inputQueue) {
+    public Input(Queue<Long> inputQueue) {
         this.inputQueue = inputQueue;
     }
 

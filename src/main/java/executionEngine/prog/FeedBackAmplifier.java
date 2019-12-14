@@ -5,8 +5,7 @@ import executionEngine.impl.IntCode;
 import executionEngine.impl.Output;
 import executionEngine.impl.error.WaitingForInputException;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.LinkedList;
 
 import static executionEngine.IntCodeUtils.getLast;
 
@@ -23,11 +22,11 @@ public class FeedBackAmplifier {
     }
 
     public long execute(int... phaseSettingForEachAmplifier){
-        final BlockingQueue<Long> amp_A_B_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Long> amp_B_C_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Long> amp_C_D_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Long> amp_D_E_Stream = new ArrayBlockingQueue<>(5);
-        final BlockingQueue<Long> amp_E_A_Stream = new ArrayBlockingQueue<>(5);
+        final LinkedList<Long> amp_A_B_Stream = new LinkedList<>();
+        final LinkedList<Long> amp_B_C_Stream = new LinkedList<>();
+        final LinkedList<Long> amp_C_D_Stream = new LinkedList<>();
+        final LinkedList<Long> amp_D_E_Stream = new LinkedList<>();
+        final LinkedList<Long> amp_E_A_Stream = new LinkedList<>();
 
         final Input inA = new Input(new long[]{phaseSettingForEachAmplifier[0],0}, amp_E_A_Stream);
         final Input inB = new Input(new long[]{phaseSettingForEachAmplifier[1]}, amp_A_B_Stream);

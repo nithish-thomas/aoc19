@@ -1,19 +1,20 @@
 package executionEngine.impl;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Output {
-    private BlockingQueue<Long> outputs = new ArrayBlockingQueue<>(200);
+    private Queue<Long> outputs;
 
     public Output() {
+        outputs = new LinkedList<>();
     }
 
-    public Output(BlockingQueue<Long> outputs) {
+    public Output(Queue<Long> outputs) {
         this.outputs = outputs;
     }
 
-    public BlockingQueue<Long> getOutputQueue() {
+    public Queue<Long> getOutputQueue() {
         return outputs;
     }
 

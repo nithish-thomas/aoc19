@@ -1,4 +1,4 @@
-package executionEngine.prog;
+package executionEngine.prog.amplifier;
 
 import executionEngine.impl.Input;
 import executionEngine.impl.IntCode;

@@ -44,4 +44,8 @@ public class Input {
             throw new WaitingForInputException();
         }
     }
+
+    public void addInput(long input){
+        this.inputQueue.add(input);
+    }
 }

@@ -31,6 +31,20 @@ public class Moon {
         return abs(x)+abs(y)+abs(z);
     }
 
+    public boolean equalsOnDimension(Moon moon, int dimension) {
+        if (this == moon) return true;
+        switch (dimension){
+            case 0: return x == moon.x;
+            case 1: return y == moon.y;
+            case 2: return z == moon.z;
+            default: return false;
+        }
+    }
+
+    public Moon copy(){
+        return new Moon(x,y,z);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

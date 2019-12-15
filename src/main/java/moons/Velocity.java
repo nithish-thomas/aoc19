@@ -22,6 +22,16 @@ public class Velocity {
         return abs(x)+abs(y)+abs(z);
     }
 
+    public boolean equalsOnDimension(Velocity o, int dimension) {
+        if (this == o) return true;
+        switch (dimension){
+            case 0: return x == o.x;
+            case 1: return y == o.y;
+            case 2: return z == o.z;
+            default: return false;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

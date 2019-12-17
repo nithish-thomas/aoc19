@@ -4,17 +4,17 @@ import java.util.Objects;
 
 public class ScreenOutputs {
     private final int left, top;
-    private final char output;
+    private final long output;
 
     public ScreenOutputs(int left, int top, int output) {
         this.left = left;
         this.top = top;
-        this.output = getOutputChar(output);
+        this.output = output;
     }
     public ScreenOutputs(long left, long top, long output) {
         this.left = Math.toIntExact(left);
         this.top = Math.toIntExact(top);
-        this.output = getOutputChar(Math.toIntExact(output));
+        this.output = output;
     }
 
     private static char getOutputChar(int output) {
@@ -36,8 +36,8 @@ public class ScreenOutputs {
         return top;
     }
 
-    public char getOutput() {
-        return output;
+    public char getOutputAsChar() {
+        return getOutputChar(Math.toIntExact(output));
     }
 
     @Override
@@ -53,4 +53,10 @@ public class ScreenOutputs {
     public int hashCode() {
         return Objects.hash(left, top);
     }
+
+    public long getOutput() {
+        return output;
+    }
+
+    public static final ScreenOutputs SCORE_SCREEN = new ScreenOutputs(-1, 0 , 0);
 }

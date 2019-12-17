@@ -1,7 +1,6 @@
 package executionEngine.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class IntCode {
     private final long[] program;
@@ -187,8 +186,8 @@ public class IntCode {
         }
     }
 
-    public List<Long> getOutputsAsList() {
-        return new ArrayList<>(output.getOutputQueue());
+    public LinkedList<Long> getOutputsAsList() {
+        return new LinkedList<>(output.getOutputQueue());
     }
 
     public Output getOutput() {

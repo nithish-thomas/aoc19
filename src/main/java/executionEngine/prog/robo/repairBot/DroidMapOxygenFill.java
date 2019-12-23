@@ -56,10 +56,10 @@ public class DroidMapOxygenFill {
             iterator.remove();
 
             if(addToStateAllPossibleMoves(state.location.newLocation(state.direction), state.step)) {
-                maxStep = maxStep < state.step? state.step : maxStep;
+                maxStep = maxStep < state.step+1? state.step+1 : maxStep;
             }
         }
-        return maxStep;
+        return maxStep -1 ;
     }
 
 

@@ -30,8 +30,9 @@ public class DroidState implements Comparable<DroidState>{
 
     private static final Comparator<DroidState> DROID_STATE_COMPARATOR = Comparator.comparingInt(DroidState::getStep)
       .thenComparingInt(value -> value.droid.getCurrentLocation().manhattanDistance())
-      .thenComparingInt(value -> value.droid.getCurrentLocation().getX())
-      .thenComparingInt(value -> value.droid.getCurrentLocation().getY());
+      .thenComparing(Comparator.<DroidState>comparingInt(value -> value.droid.getCurrentLocation().getX()).reversed())
+      .thenComparing(Comparator.<DroidState>comparingInt(value -> value.droid.getCurrentLocation().getY()).reversed())
+      .thenComparing(droidState -> droidState.direction);
 
     @Override
     public int compareTo(DroidState o) {

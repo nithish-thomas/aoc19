@@ -1,8 +1,10 @@
 package nanoFactory;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FuelFactoryTest {
 
@@ -87,9 +89,23 @@ public class FuelFactoryTest {
     }
 
     @Test
+    @Ignore
     public void shouldPrintSolDay14_2() {
         final long ore = 1000000000000L;
-        final long amountOfOre = new FuelFactory(day14Input).amountOfBaseChemicalRequire(Chemical.getChemical("FUEL"), 1);
+        final long oreRequired = oresRequiredForFuel(1);
 
+        final long minFuelCreatable = ore / oreRequired;
+        long fuelCreatable = minFuelCreatable;
+
+        while(ore>oresRequiredForFuel(fuelCreatable++));
+        final long fuelThatCanBeCreated = fuelCreatable - 2;
+        System.out.println(fuelThatCanBeCreated);
+        assertTrue(2690377< fuelThatCanBeCreated);
+        assertEquals(4052920, fuelThatCanBeCreated);
+        assertTrue(4052921> fuelThatCanBeCreated);
+    }
+
+    private long oresRequiredForFuel(long amountRequired) {
+        return new FuelFactory(day14Input).amountOfBaseChemicalRequire(Chemical.getChemical("FUEL"), amountRequired);
     }
 }

@@ -30,7 +30,7 @@ public class DroidMap {
         return unexploredStates.add(new DroidState(droid.cloneDrone(), up, step));
     }
 
-    public int play() {
+    public int nearestPathToOxygenSystem() {
         addToStateAllPossibleMoves(new RepairDroid(program), 0);
         while (!unexploredStates.isEmpty()) {
             final Iterator<DroidState> iterator = unexploredStates.iterator();

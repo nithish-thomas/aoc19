@@ -4,7 +4,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class FuelFactoryTest {
 
@@ -100,9 +99,7 @@ public class FuelFactoryTest {
         while(ore>oresRequiredForFuel(fuelCreatable++));
         final long fuelThatCanBeCreated = fuelCreatable - 2;
         System.out.println(fuelThatCanBeCreated);
-        assertTrue(2690377< fuelThatCanBeCreated);
         assertEquals(4052920, fuelThatCanBeCreated);
-        assertTrue(4052921> fuelThatCanBeCreated);
     }
 
     private long oresRequiredForFuel(long amountRequired) {

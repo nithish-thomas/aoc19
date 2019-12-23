@@ -1,9 +1,11 @@
-package executionEngine.prog.hullPaint;
+package executionEngine.prog.robo.hullPaint;
 
 import executionEngine.impl.Input;
 import executionEngine.impl.IntCode;
 import executionEngine.impl.Output;
 import executionEngine.impl.error.WaitingForInputException;
+import executionEngine.prog.robo.Direction;
+import executionEngine.prog.robo.Location;
 
 import java.util.HashSet;
 import java.util.Set;

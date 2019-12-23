@@ -193,4 +193,11 @@ public class IntCode {
     public Output getOutput() {
         return output;
     }
+
+    public IntCode clone(){
+        final IntCode intCodeClone = new IntCode(this.getWorkingMemory());
+        intCodeClone.relativeBase = relativeBase;
+        intCodeClone.opCodeExecutionLocation = opCodeExecutionLocation;
+        return intCodeClone;
+    }
 }

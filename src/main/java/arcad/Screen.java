@@ -1,20 +1,18 @@
 package arcad;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.OptionalInt;
 
 public class Screen {
     LinkedHashSet<ScreenOutputs> buffer= new LinkedHashSet();
 
-    public void addToBuffer(List<Long> outputs){
-        final Iterator<Long> iterator = outputs.iterator();
-        while (iterator.hasNext()) {
-            final Long left = iterator.next();
-            final Long top = iterator.next();
-            final Long item = iterator.next();
-            final ScreenOutputs screenOutput = new ScreenOutputs(left, top, item);
-            buffer.remove(screenOutput);
-            buffer.add(screenOutput);
-        }
+    public void addToBuffer(List<ScreenOutputs> screenOutputs){
+        screenOutputs.forEach(screenOutput -> {
+              buffer.remove(screenOutput);
+              buffer.add(screenOutput);
+          });
     }
 
     public char[][] convertToScreenCharArray() {
@@ -48,5 +46,9 @@ public class Screen {
         }
         System.out.println();
         System.out.println();
+    }
+
+    public LinkedHashSet<ScreenOutputs> getBuffer() {
+        return buffer;
     }
 }

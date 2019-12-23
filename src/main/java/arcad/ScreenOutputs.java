@@ -1,5 +1,8 @@
 package arcad;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class ScreenOutputs {
@@ -59,4 +62,16 @@ public class ScreenOutputs {
     }
 
     public static final ScreenOutputs SCORE_SCREEN = new ScreenOutputs(-1, 0 , 0);
+
+    public static List<ScreenOutputs> convertToScreenOutput(List<Long> outputs){
+        List<ScreenOutputs> outputsList = new LinkedList<>();
+        final Iterator<Long> iterator = outputs.iterator();
+        while (iterator.hasNext()) {
+            final Long left = iterator.next();
+            final Long top = iterator.next();
+            final Long item = iterator.next();
+            outputsList.add(new ScreenOutputs(left, top, item));
+        }
+        return outputsList;
+    }
 }

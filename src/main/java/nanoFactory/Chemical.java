@@ -17,8 +17,9 @@ public class Chemical {
 
     private final static Map<String, Chemical> store = new HashMap<>();
     public static Chemical getChemical(String name){
-        store.putIfAbsent(name, new Chemical(name));
-        return store.get(name);
+        String nameProcessed = name.trim();
+        store.putIfAbsent(nameProcessed, new Chemical(nameProcessed));
+        return store.get(nameProcessed);
     }
 
     @Override
@@ -32,5 +33,12 @@ public class Chemical {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Chemical{" +
+          "name='" + name + '\'' +
+          '}';
     }
 }

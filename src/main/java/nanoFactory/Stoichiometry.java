@@ -1,18 +1,19 @@
 package nanoFactory;
 
-import com.google.common.collect.HashMultimap;
-
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Stoichiometry {
-    private final HashMultimap<Chemical, ReactionEquation> reactionsThatCanCreate = HashMultimap.create();
+    private final Map<Chemical, ReactionEquation> reactionsThatCanCreate = new HashMap<>();
 
     public void addReaction(ReactionEquation equation) {
         equation.getOutputs()
           .entrySet().forEach(reactionOutputsEntry -> reactionsThatCanCreate.put(reactionOutputsEntry.getKey(), equation));
     }
 
-    public Collection<ReactionEquation> getReactionsThatCreates(Chemical chemical){
+    public ReactionEquation getReactionsThatCreates(Chemical chemical){
         return reactionsThatCanCreate.get(chemical);
     }
+
+
 }

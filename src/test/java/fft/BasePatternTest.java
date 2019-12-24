@@ -1,5 +1,6 @@
 package fft;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -65,8 +66,9 @@ public class BasePatternTest {
     }
 
     @Test
+    @Ignore
     public void shouldReturn84462026For03036732577212944063491565474664Times10000With100Phases() {
-        final BasePattern basePattern = new BasePattern("03036732577212944063491565474664",100);
+        final BasePattern basePattern = new BasePattern("03036732577212944063491565474664",10000);
         assertEquals(84462026, basePattern.getMessage2());
     }
 

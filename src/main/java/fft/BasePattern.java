@@ -29,11 +29,9 @@ public class BasePattern {
     }
 
     private static int output(int[] inputs, int level) {
-        BasePatternIterator iterator = new BasePatternIterator(level);
-        iterator.next();
         int sum = 0;
         for (int i = 0; i < inputs.length; i++) {
-            sum += inputs[i] * iterator.next();
+            sum += inputs[i] * BasePatternIterator.getPattern(i, level);
         }
         return Math.abs(sum % 10);
     }
@@ -45,6 +43,26 @@ public class BasePattern {
             result = new BasePattern(outputs);
         }
         return result;
+    }
+
+    public static BasePattern applyTimesFast(BasePattern pattern, int times) {
+        int[] result = pattern.inputs;
+        for (int i = 0; i < times; i++) {
+            final int[] result1 = new int[result.length];
+
+            for (int i1 = 0; i1 < result.length; i1++) {
+                result1[i1] = output(result, i1 + 1);
+            }
+            result = result1;
+        }
+        return new BasePattern(result);
+    }
+
+    public static int getValueAt(int pattern[], int level, int times) {
+        if (times == 1) {
+
+        }
+        return 0;
     }
 
     public int[] getInputs() {
@@ -64,14 +82,14 @@ public class BasePattern {
         final BasePattern basePatternWithOffset = applyTimes(this, 100);
         final int offset = convertToInteger(basePatternWithOffset.inputs, 0, 7);
 
-        return  convertToInteger(basePatternWithOffset.inputs, offset, offset + 8);
+        return convertToInteger(basePatternWithOffset.inputs, offset, offset + 8);
     }
 
     private int convertToInteger(int[] digits, int start, int end) {
         int result = 0;
         final int length = end - start;
         for (int i = 0; i < length; i++) {
-            final int multiplicationFactor = (int) Math.pow(10,  (length - 1)-i);
+            final int multiplicationFactor = (int) Math.pow(10, (length - 1) - i);
             result += digits[i] * multiplicationFactor;
         }
         return result;

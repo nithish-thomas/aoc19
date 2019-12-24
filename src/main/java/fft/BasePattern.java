@@ -14,6 +14,16 @@ public class BasePattern {
         this.inputs = inputs;
     }
 
+    public BasePattern(String stringInput, int times) {
+        final int[] inputs = new int[stringInput.length() * times];
+        for (int i = 0; i < times; i++) {
+            for (int j = 0; j < stringInput.length(); j++) {
+                inputs[(i * stringInput.length()) + j] = Character.digit(stringInput.charAt(j), 10);
+            }
+        }
+        this.inputs = inputs;
+    }
+
     public BasePattern(int[] inputs) {
         this.inputs = inputs;
     }
@@ -46,6 +56,23 @@ public class BasePattern {
 
         for (int i = 0; i < inputs.length; i++) {
             result[i] = output(inputs, i + 1);
+        }
+        return result;
+    }
+
+    public int getMessage2() {
+        final BasePattern basePatternWithOffset = applyTimes(this, 100);
+        final int offset = convertToInteger(basePatternWithOffset.inputs, 0, 7);
+
+        return  convertToInteger(basePatternWithOffset.inputs, offset, offset + 8);
+    }
+
+    private int convertToInteger(int[] digits, int start, int end) {
+        int result = 0;
+        final int length = end - start;
+        for (int i = 0; i < length; i++) {
+            final int multiplicationFactor = (int) Math.pow(10,  (length - 1)-i);
+            result += digits[i] * multiplicationFactor;
         }
         return result;
     }

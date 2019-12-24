@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class BasePatternTest {
     @Test
@@ -62,4 +63,16 @@ public class BasePatternTest {
         final BasePattern result = BasePattern.applyTimes(basePattern, 100);
         assertArrayEquals(new int[]{8,4,4,8,7,7,2,4}, Arrays.copyOfRange(result.getInputs(), 0 ,8));
     }
+
+    @Test
+    public void shouldReturn84462026For03036732577212944063491565474664Times10000With100Phases() {
+        final BasePattern basePattern = new BasePattern("03036732577212944063491565474664",100);
+        assertEquals(84462026, basePattern.getMessage2());
+    }
+
+//    @Test
+//    public void testTheory1() {
+//        final BasePattern basePattern = new BasePattern("1",1000);
+//        assertEquals(84462026, basePattern.getMessage2());
+//    }
 }

@@ -27,4 +27,9 @@ class BasePatternIterator implements Iterator<Integer> {
         final int patternSize = pattern.length;
         return pattern[(int) (((currentLoc+1)/level)% patternSize)];
     }
+
+    public static int getPattern2(long currentLoc , int level) {
+        final int patternSize = pattern.length;
+        return pattern[(int) ((currentLoc/level)% patternSize)];
+    }
 }
